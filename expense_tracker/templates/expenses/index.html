@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-3">
+    <h1>Expenses List</h1>
+    <div class="row">
+        <div class="col-md-10">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="">Expenses</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">My Expenses</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="col-md-2">
+            <a href="{% url 'add-expense' %}" class="btn btn-primary">Add Expense</a>
+        </div>
+    </div>
+
+    <div class="container">
+        {% include 'partials/messages.html' %}
+
+        {% if expenses.count %}
+
+        <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <div class="form-goup">
+                    <input type="text" class="form-control" id="searchField" placeholder="Search">
+                </div>
+            </div>
+        </div>
+
+        <div class="app-table">
+            <table class="table table-stripped table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">Amount (Currency)</th>
+                        <th class="text-center">Category</th>
+                        <th class="text-center">Description</th>
+                        <th class="text-center">Date created</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for expense in page_obj %}
+                    <tr>
+                        <td class="text-center">{{ expense.amount }}</td>
+                        <td class="text-center">{{ expense.category }}</td>
+                        <td class="text-center">{{ expense.description }}</td>
+                        <td class="text-center">{{ expense.date }}</td>
+                        <td><a href="{% url 'expense_edit' expense.id %}" class="btn btn-sm btn-secondary">Edit</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="no-results" style="display: none;">
+            No Results found!
+        </div>
+
+        <div class="table-output">
+            <table class="table table-stripped table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">Amount (Currency)</th>
+                        <th class="text-center">Category</th>
+                        <th class="text-center">Description</th>
+                        <th class="text-center">Date created</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="table-body">
+
+
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination-container">
+            <div class="">
+                Showing page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+            </div>
+
+
+            <ul class="pagination d-flex justify-content-end">
+                {% if page_obj.has_previous %}
+                <li class="page-item {% if page_obj.number == 1 %} active {% endif %}">
+                    <a href="?page=1" class="page-link btn btn-light">&laquo; First</a>
+                </li>
+                <li class="page-item">
+                    <a href="?page={{ page_obj.previous_page_number }}" class="page-link btn btn-secondary">Previous</a>
+                </li>
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a href="?page={{ page_obj.next_page_number }}" class="page-link btn btn-secondary">Next</a>
+                </li>
+                <li class="page-item">
+                    <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link btn btn-light">Last &raquo;</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+
+
+
+        {% endif %}
+    </div>
+
+</div>
+
+<script src="{% static 'js/searchExpenses.js' %}"></script>
+
+{% endblock %}

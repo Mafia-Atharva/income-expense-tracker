@@ -1,0 +1,75 @@
+{% extends 'base_auth.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div class="card mt-5">
+            <div class="card-body">
+                <div class="card-title py-3">
+                    <h4 class="text-center">Register a free account</h4>
+                </div>
+                <form action="{% url 'register' %}" method="post">
+
+                    {% csrf_token %}
+                    {% include 'partials/messages.html' %}
+
+                    <div class="form-group">
+                        <input type="text" name="username" id="usernameField" class="form-control font-control-sm mb-3"
+                            placeholder="John Doe" value="{{fieldValues.username}}">
+                    </div>
+
+                    <div class="invalid-feedback" style="display: none;">
+
+                    </div>
+                    <p class="text-sm text-success usernamesuccessOutput"></p>
+
+                    <div class="form-group">
+                        <input type="email" name="email" id="emailField" class="form-control font-control-sm mb-3"
+                            placeholder="johndoe@gmail.com" value="{{fieldValues.email}}">
+                    </div>
+                    <div class="emailFeedbackArea" style="display: none;">
+
+                    </div>
+                    <p class="text-sm text-success emailsuccessOutput"></p>
+
+                    <div class="form-group">
+                        <input type="password" name="password" id="passwordField"
+                            class="form-control font-control-sm mb-3" placeholder="Password">
+                    </div>
+                    <small class="float-end  showPasswordToggle" id="togglepass">SHOW</small>
+                    <input type="submit" value="Register" class="btn btn-block btn-primary submit-btn mt-5">
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+
+<script src="{% static 'js/register.js' %}"></script>
+
+<style>
+    .showPasswordToggle {
+        cursor: pointer;
+        transition: all;
+    }
+
+    .showPasswordToggle:hover {
+        transform: scale(1.2);
+    }
+</style>
+
+<script>
+    {% if registration_success %}
+        setTimeout(function() {
+            window.location.href = "{% url 'login' %}";
+        }, 2000);
+    {% endif %}
+</script>
+
+
+{% endblock content %}
