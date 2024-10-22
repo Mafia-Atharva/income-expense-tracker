@@ -18,10 +18,21 @@
         <div class="col-md-2">
             <a href="" class="btn btn-primary">Summary</a>
         </div>
-        <canvas id="myChart"></canvas>
     </div>
 
+    <!-- Adjusted canvas size -->
+    <canvas id="myChart" width="600" height="400"></canvas>
 </div>
+
+<!-- Custom styles for the canvas to ensure appropriate size -->
+<style>
+    canvas {
+        width: 600px; /* Adjust width */
+        height: 400px; /* Adjust height */
+        display: block;
+        margin: 20px auto;
+    }
+</style>
 
 <script src="{% static 'js/stats.js' %}"></script>
 

@@ -12,19 +12,24 @@ import datetime
 import csv
 import xlwt
 
+
 @login_required(login_url='authentication/login')
 @never_cache
 def index(request):
-    categories= Category.objects.all()
+    categories = Category.objects.all()
     expenses = Expense.objects.filter(owner=request.user)
-    paginator=Paginator(expenses,8)
-    page_number=request.GET.get('page')
-    currency=UserPreferences.objects.get(user=request.user)
-    page_obj=Paginator.get_page(paginator,page_number)
-    context={
-        'expenses':expenses,
-        'page_obj':page_obj,
-        'currency':currency,
+    paginator = Paginator(expenses, 8)
+    page_number = request.GET.get('page')
+    
+    # Get or create UserPreferences for the current user
+    user_preferences, created = UserPreferences.objects.get_or_create(user=request.user)
+    
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'expenses': expenses,
+        'page_obj': page_obj,
+        'currency': user_preferences.currency,  # Access currency from user_preferences
     }
     return render(request, 'expenses/index.html', context)
 
