@@ -53,15 +53,6 @@ class RegistrationView(View):
                 user = User.objects.create_user(username=username,email=email)
                 user.set_password(password)
                 user.save()
-                # email_subject="Please activate your account"
-                # email_body='Test'
-                # email = EmailMessage(
-                #     email_subject,
-                #     email_body,
-                #     "noreply@testserver.com",
-                #     [email],
-                # )
-                # email.send(fail_silently=False)
                 messages.success(request, "Acccount created successfully! Redirecting you to the login page")
                 context['registration_success'] = True
                 return render(request, 'authentication/register.html', context)

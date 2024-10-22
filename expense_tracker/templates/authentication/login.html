@@ -26,7 +26,11 @@
                         <input type="password" name="password" id="passwordField"
                             class="form-control font-control-sm mb-3" placeholder="Password">
                     </div>
-                    <input type="submit" value="Login" class="btn btn-block btn-primary login-submit-btn mt-5">
+
+                    <div class="d-flex justify-content-between mt-5">
+                        <input type="submit" value="Login" class="btn btn-primary login-submit-btn">
+                        <a href="{% url 'register' %}" class="btn btn-primary">Register</a>
+                    </div>
 
                 </form>
             </div>
@@ -47,6 +51,5 @@
         transform: scale(1.2);
     }
 </style>
-
 
 {% endblock content %}
